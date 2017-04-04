@@ -1,0 +1,25 @@
+{
+  "name": "spelt",
+  "version": "0.0.1",
+  "description": "Fast spellchecker written in javascript",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "ts-node test/test && ts-node test/benchmark",
+    "build": "tsc",
+    "prepublish": "npm run test && npm run build"
+  },
+  "keywords": [
+    "spellchecker",
+    "spell",
+    "check",
+    "checker"
+  ],
+  "author": "Alex Corvi",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^7.0.12"
+  },
+  "dependencies": {
+    "strdistance": "0.0.2"
+  }
+}
