@@ -21,5 +21,16 @@
   },
   "dependencies": {
     "strdistance": "0.0.2"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexcorvi/spelt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alexcorvi/spelt/issues"
+  },
+  "homepage": "https://github.com/alexcorvi/spelt#readme"
 }
