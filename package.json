@@ -18,7 +18,8 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^7.0.12",
-    "buble-loader": "^0.4.1"
+    "buble-loader": "^0.4.1",
+    "spelt-gb-dict": "^1.0.0"
   },
   "dependencies": {
     "strdistance": "0.0.2"
