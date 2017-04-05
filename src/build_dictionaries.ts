@@ -1,10 +1,6 @@
 /// <reference path="../node_modules/@types/node/index.d.ts" />
 
 import transformations from "./transformations";
-import gb from "./dictionaries/gb";
-import us from "./dictionaries/us";
-
-const dictionaries = {gb,us};
 
 export interface Dictionaries {
 	misspelt: {
@@ -15,16 +11,15 @@ export interface Dictionaries {
 	};
 }
 
-export function build (lang:"gb"|"us"):Dictionaries {
+export function build (dictString:string):Dictionaries {
 	function appendToDictionary(entry:string,correctWord:string){
 		if(!misspelt[entry]) misspelt[entry] = correctWord;
 		else misspelt[entry] = misspelt[entry] + "|" + correctWord;
 	}
 	const misspelt:{[key:string]:string} = {};
 	const correct:{[key:string]:1} = {};
-	// default dictionary is british
-	if(lang !== "us" && lang !== "gb") lang = "gb";
-	let sourceDictionary:string[] = dictionaries[lang].split("\n");
+	
+	let sourceDictionary:string[] = dictString.split("\n");
 	for (var index = 0; index < sourceDictionary.length; index++) {
 		var word = sourceDictionary[index];
 		// add to correct dictionary
