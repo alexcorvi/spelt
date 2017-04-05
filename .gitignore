@@ -14,3 +14,5 @@ Thumbs.dbma
 /dist/*
 *.log
 .jshintrc
+webpack.config.js
+/demo/*
