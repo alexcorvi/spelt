@@ -2,6 +2,7 @@
 
 JavaScript english spellchecker written in TypeScript.
 
+Demo: [http://spelt-demo.surge.sh/](http://spelt-demo.surge.sh/)
 
 ## Bundled Dictionaries
 
