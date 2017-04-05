@@ -17,24 +17,23 @@ export interface CheckResult {
 }
 
 export interface Options {
-	lang:"us"|"gb";
+	dictionary:string;
 	distanceThreshold:number;
 }
 
-export function buildSpelt ({lang="gb", distanceThreshold=0.22}: Options) {
-	const dictionaries:Dictionaries = builder(lang);
+export function buildSpelt ({dictionary, distanceThreshold=0.22}: Options) {
+	const dictionaries:Dictionaries = builder(dictionary);
 	return function check (raw:string):CheckResult{
-		raw = raw.toLowerCase();
-		let correct:boolean = !!dictionaries.correct[raw];
-		if(/^((\d{1,3})+(,\d{3})*(\.\d+)?)$/.test(raw)) correct = true;
-		if(/\W+/.test(raw)) correct = true;
+		let correct:1|undefined = dictionaries.correct[raw];
+		if((!correct) && /^((\d{1,3})+(,\d{3})*(\.\d+)?)$/.test(raw)) correct = 1;
+		if((!correct) && /\W+/.test(raw)) correct = 1;
 		let corrections:Correction[] = [];
 		let breaker = false;
 		if(!correct) {
 			for (let index = 0; index < transformations.length; index++) {
 				if(breaker) break;
 				let rule = transformations[index];
-				let transformed = raw.replace(rule.findRegex,rule.replaceWith);
+				let transformed = raw.replace(rule.regex,rule.replaceWith);
 				let misspeltEntry = (dictionaries.misspelt[transformed]||"").split("|");
 				for (let index = 0; index < misspeltEntry.length; index++) {
 					var correctionWord = misspeltEntry[index];
@@ -52,7 +51,7 @@ export function buildSpelt ({lang="gb", distanceThreshold=0.22}: Options) {
 				}
 			}
 		}
-		return {raw,correct,corrections:corrections.sort((a,b)=>a.distance - b.distance)};
+		return {raw,correct:!!correct,corrections:corrections.sort((a,b)=>a.distance - b.distance)};
 	};
 }
 
