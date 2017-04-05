@@ -27,7 +27,7 @@ npm i --save spelt-us-dict
 
 - Canadian English dictionary
 ```
-npm i --save spelt-au-dict
+npm i --save spelt-ca-dict
 ```
 
 - Australian English dictionary
