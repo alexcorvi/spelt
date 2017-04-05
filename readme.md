@@ -4,25 +4,47 @@ JavaScript english spellchecker written in TypeScript.
 
 Demo: [http://spelt-demo.surge.sh/](http://spelt-demo.surge.sh/)
 
-## Bundled Dictionaries
-
-- English US
-- English GB
-
 ## Installation
+
+#### Install the spell checker via NPM
 
 ```
 npm i --save spelt
 ```
 
+
+#### Install one of the dictionaries
+
+- British English dictionary
+```
+npm i --save spelt-gb-dict
+```
+
+- American English dictionary
+```
+npm i --save spelt-us-dict
+```
+
+- Canadian English dictionary
+```
+npm i --save spelt-au-dict
+```
+
+- Australian English dictionary
+```
+npm i --save spelt-au-dict
+```
+
 ## Usage
 
 ```typescript
-// import
+// import the lib
 import spelt from "spelt";
+// import one of the dictionaries
+import {dictionary} from "spelt-gb-dict";
 // build dictionary
 const check = spelt({
-	lang:"gb",
+	dictionary:dictionary,
 	// can be either "gb" or "us"
 	distanceThreshold:0.2
 	// when a correction found with this distance
@@ -75,19 +97,13 @@ I've wrote my own string distance calculator and you can find it [here](https://
 ## Performance
 
 - __Spellchecking a book:__ Processing H.G Wells Novel _The Time Machine_ with (1000s of misspellings introduced took about 8 seconds), in a rate of __4K words/second__.
-- __[Spellchecking Wikipedia list](http://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines):__ Processing about 4 thousands words, all misspelt, took about 3.5 seconds with a rate of __1K word/second__.
+- __[Spellchecking Wikipedia list](http://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines):__ Processing about 4 thousands words, all misspelt, took about 3.5 seconds with a rate of __2.3K word/second__.
 
 This is not very impressive, but I'm working on it. However, it's far better than [Norvig's](http://norvig.com/spell-correct.html) spellchecker.
 
 ## Accuracy
 
-Running on [wikipedia's list](http://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines), with a distance threshold of `0`, It was able to find the accurate correction in the first 10 suggestions on __~90%__ of the cases.
-
-## TODO
-
-- Clean up transformations, as some of them might be useless.
-- Introduce more accurate transformations.
-- Using a case sensitive dictionary might improve performance and accuracy considerably.
+Running on [wikipedia's list](http://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines), with a distance threshold of `0`, It was able to find the accurate correction in the first 5 suggestions on __85%__ of the cases.
 
 ## License
 
