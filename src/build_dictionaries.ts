@@ -29,7 +29,7 @@ export function build (dictString:string):Dictionaries {
 		let noVowels = word.replace(/aouiey/,"");
 		for (var transformationIndex = 0; transformationIndex < transformations.length; transformationIndex++) {
 			var rule = transformations[transformationIndex];
-			appendToDictionary(word.replace(rule.findRegex,rule.replaceWith),word);
+			appendToDictionary(word.replace(rule.regex,rule.replaceWith),word);
 		}
 	}
 	return {misspelt,correct};

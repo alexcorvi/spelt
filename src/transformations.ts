@@ -1,125 +1,75 @@
-export interface TransformationsRule {
-	findRegex:RegExp;
+const vowels = ["a","i","o","u","y","e"];
+const emptyVoice = ["w","h"].concat(vowels);
+const comesWithH = ["w","p","g","p","c","s"];
+
+export interface ReplacementObject {
+	regex:RegExp;
 	replaceWith:string;
 }
 
-export const rules:TransformationsRule[] = [
+export const replaceRules:ReplacementObject[] = [
+	// drop middle 1
 	{
-		findRegex:/[aouieywhr]+/g,
-		replaceWith:""
+		regex:/(.)(.)(.)/g,
+		replaceWith:"$1$3"
 	},
+	// drop middle 2
 	{
-		findRegex:/(ph|gh|ch|sh|ti|s|c|v|f|nk|kn|op|po|t|ite|n|'|ly)/g,
-		replaceWith:""
+		regex:/(..)(..)(..)/g,
+		replaceWith:"$1$3"
 	},
+	// drop middle 3
 	{
-		findRegex:/(.)(?=.*\1)/g,
-		replaceWith:""
+		regex:/(..)(...)(..)/g,
+		replaceWith:"$1$3"
 	},
+	// drop middle 4
 	{
-		findRegex:/\W/g,
-		replaceWith:""
+		regex:/(..)(....)(..)/g,
+		replaceWith:"$1$3"
 	},
+	// drop what's between first 2 and vowels
 	{
-		findRegex:/...$/,
-		replaceWith:""
-	},
-	{
-		findRegex:/..$/,
-		replaceWith:""
-	},
-	{
-		findRegex:/.$/,
-		replaceWith:""
-	},
-	{
-		findRegex:/(..)(....)$/,
-		replaceWith:"$1"
-	},
-	{
-		findRegex:/(...)(.....)$/,
-		replaceWith:"$1"
-	},
-	{
-		findRegex:/^.../,
-		replaceWith:""
-	},
-	{
-		findRegex:/^../,
-		replaceWith:""
-	},
-	{
-		findRegex:/^./,
-		replaceWith:""
-	},
-	{
-		findRegex:/[sz]/g,
-		replaceWith:""
-	},
-	{
-		findRegex:/[our]/g,
-		replaceWith:""
-	},
-	{
-		findRegex:/[^aouieywhr]/,
-		replaceWith:""
-	},
-	{
-		findRegex:/[^aouieywhr][^aouieywhr]/,
-		replaceWith:""
-	},
-	{
-		findRegex:/[^aouieywhr][^aouieywhr][^aouieywhr]/,
-		replaceWith:""
-	},
-	{
-		findRegex:/[aouieywhr][^aouieywhr]/g,
-		replaceWith:""
-	},
-	{
-		findRegex:/(le|ed|cs|ing|er|ish|il|ly|g|tion)$/,
-		replaceWith:""
-	},
-	{
-		findRegex:/[asd]/g,
-		replaceWith:""
-	},
-	{
-		findRegex:/[rtyu]/g,
-		replaceWith:""
-	},
-	{
-		findRegex:/[iop]/g,
-		replaceWith:""
-	},
-	{
-		findRegex:/[fghjkl]/g,
-		replaceWith:""
-	},
-	{
-		findRegex:/[plmokn]/g,
-		replaceWith:""
-	},
-	{
-		findRegex:/[ijbuhgv]/g,
-		replaceWith:""
-	},
-	{
-		findRegex:/[cguytfdxr]/g,
-		replaceWith:""
-	},
-	{
-		findRegex:/[qazxswedcrfv]/g,
-		replaceWith:""
-	},
-	{
-		findRegex:/iti/g,
-		replaceWith:"i"
-	},
-	{
-		findRegex:/[bp]/g,
-		replaceWith:""
-	},
+		regex:new RegExp(`^(..)(.*)([${vowels.join("")}])`),
+		replaceWith:"$1$3"
+	}
 ];
+
+
+export const rules:ReplacementObject[] = [
+	// drop the vowels
+	new RegExp(`[${vowels.join("")}]`,"gi"),
+	// drop the empty sounds
+	new RegExp(`[${emptyVoice.join("")}]`,"gi"),
+	// drop the ones that comes with H
+	new RegExp(`h?[${comesWithH.join("")}]h?`,"gi"),
+	// drop common group 1
+	/[tmnbp]/gi,
+	// drop common group 2
+	/[rdsakl]/gi,
+	// drop the first 1 char
+	/^./,
+	// drop the first 2 chars
+	/^../,
+	// drop the first 3 chars
+	/^.../,
+	// drop the last 1 char
+	/.$/,
+	// drop the last 2 chars
+	/..$/,
+	// drop the last 3 chars
+	/...$/,
+	// drop repeated
+	/(.)(?=.*\1)/g,
+	// drop non words
+	/\W/g,
+]
+.map(regex=>{
+	return {
+		regex:regex,
+		replaceWith:"",
+	};
+})
+.concat(replaceRules);
 
 export default rules;
