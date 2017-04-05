@@ -1,7 +1,8 @@
-import {readFileSync} from "fs";
+import {readFileSync,writeFileSync} from "fs";
 import spelt from "../src/index";
 
-const checker = spelt({distanceThreshold:0,lang:"gb"});
+import {dictionary} from "spelt-gb-dict";
+const checker = spelt({distanceThreshold:0,dictionary:dictionary});
 
 const cases:{[key:string]:string[]} = {};
 
@@ -16,6 +17,8 @@ readFileSync(__dirname+"/list.txt","utf8")
 const misspellings = Object.keys(cases);
 let inaccuracies = 0;
 
+let d:string[][] = [];
+
 for (var index = 0; index < misspellings.length; index++) {
 	let misspelling = misspellings[index];
 	let expectedCorrections = cases[misspelling];
@@ -27,9 +30,12 @@ for (var index = 0; index < misspellings.length; index++) {
 			console.log(misspelling,expected,"\t",resultCorrections.join(" "));
 			console.log("------");
 			*/
+			d.push([misspelling,expected]);
 			inaccuracies++;
 		}
 	});
 }
 
+console.log(inaccuracies);
 console.log("Accuracy:",Math.round(((misspellings.length - inaccuracies)*100)/misspellings.length),"%");
+writeFileSync("./d.json",JSON.stringify(d,null,4));

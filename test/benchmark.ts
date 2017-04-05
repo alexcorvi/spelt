@@ -1,6 +1,7 @@
 import spelt from "../src/index";
 import {readFileSync} from "fs";
-const checker = spelt({distanceThreshold:0.22,lang:"gb"});
+import {dictionary} from "spelt-gb-dict";
+const checker = spelt({distanceThreshold:0.22,dictionary:dictionary});
 // this file has about 2000 misspellings
 const file = readFileSync(__dirname+"/big-sample.txt","utf8").split(/\W+/);
 
